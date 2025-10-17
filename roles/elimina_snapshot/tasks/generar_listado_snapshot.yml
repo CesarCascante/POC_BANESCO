@@ -4,11 +4,11 @@
 
 - name: Loop de Eliminar Snapshot en caso de existir | Obtener timestamp actual
   set_fact:
-    ahora_ts: "{{ lookup('pipe','date +%s') | int }}"
+    ahora_ts: "{{ lookup('pipe', 'date +%s') | int }}"
 
 - name: Loop de Eliminar Snapshot en caso de existir | Obtener timestamp del snapshot
   set_fact:
-    snap_ts: "{{ lookup('pipe', 'date -d \"' + fechasnap[:19].replace('T',' ') + '\" +%s') | int }}"
+    snap_ts: "{{ lookup('pipe', 'date -d \"' + fechasnap[:19].replace('T', ' ') + '\" +%s') | int }}"
 
 - name: Loop de Eliminar Snapshot en caso de existir | Comparar snapshot con más de 4 días
   set_fact:
