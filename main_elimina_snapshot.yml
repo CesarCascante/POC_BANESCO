@@ -1,0 +1,7 @@
+---
+- name: Playbook para la eliminacion de Snapshot en VMWare segun dias indicados.
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  roles:
+    - elimina_snapshot

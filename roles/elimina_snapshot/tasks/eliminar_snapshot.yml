@@ -1,0 +1,26 @@
+# - name: Loop de eliminar snapshots | Delete old snapshots
+#   community.vmware.vmware_guest_snapshot:
+#     hostname: "{{ vm_host_dc }}"
+#     validate_certs: no
+#     datacenter: "{{ vmware_data }}"
+#     name: "{{ info_detalle_vm.instance.hw_name }}"
+#     state: absent
+#     snapshot_name: "{{ item.name }}"
+#     folder: ""
+#   delegate_to: localhost
+#   async: 1000
+#   poll: 0
+#   when:
+#     - dias_diff | int > 4
+#     - item.description != "NO_BORRAR"
+
+- name: Loop de eliminar snapshots | Mensaje si no hay snapshots antiguos
+  debug:
+    msg: >-
+      hostname: {{ vm_host_dc }} 
+      validate_certs: no 
+      datacenter: {{ vmware_data }}
+      name: {{ item.vm }}
+      state: absent
+      snapshot_name: {{ item.snapshot }}
+      folder:
