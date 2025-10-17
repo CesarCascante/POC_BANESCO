@@ -20,7 +20,7 @@
       ELIMINAR en servidor {{ info_detalle_vm.instance.hw_name }} con el snapshot {{ item.name }}
   when:
     - dias_diff | int > dias_eliminar | int
-    #- item.description != "NO_BORRAR"
+    # - item.description != "NO_BORRAR"
 
 - name: Loop de Eliminar Snapshot en caso de existir | Agregar a la lista de snapshots a eliminar si cumple condición.
   set_fact:

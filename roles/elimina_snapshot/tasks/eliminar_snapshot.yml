@@ -17,8 +17,8 @@
 - name: Loop de eliminar snapshots | Mensaje si no hay snapshots antiguos
   debug:
     msg: >-
-      hostname: {{ vm_host_dc }} 
-      validate_certs: no 
+      hostname: {{ vm_host_dc }}
+      validate_certs: no
       datacenter: {{ vmware_data }}
       name: {{ item.vm }}
       state: absent

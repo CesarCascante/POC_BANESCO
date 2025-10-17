@@ -19,5 +19,5 @@
     file: generar_listado_snapshot.yml
   loop: '{{ info_detalle_vm.instance.snapshots }}'
   loop_control:
-    extended: yes
+    extended: true
   when: info_detalle_vm.msg is not defined and info_detalle_vm.instance.snapshots != []
