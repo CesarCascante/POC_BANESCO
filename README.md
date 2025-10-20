@@ -1,20 +1,41 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Role Name: elimina_snapshot
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## 📌 Descripción
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Este rol permite eliminar snapshots antiguos de máquinas virtuales en VMware vSphere.
+Se basa en criterios de antigüedad e información obtenida directamente desde vCenter o ESXi.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Diseñado siguiendo las buenas prácticas recomendadas por Red Hat para roles reutilizables, mantenibles y documentados.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+---
+
+## ✅ Requerimientos del sistema / Control Node
+
+- **Ansible** 2.12 o superior
+- Acceso al entorno VMware vSphere/vCenter
+- Python y librerías necesarias para las colecciones VMware
+- Credenciales válidas para autenticación
+
+---
+
+## ✅ Colecciones utilizadas
+
+Este rol utiliza los siguientes módulos de las colecciones `community.vmware` y `ansible.builtin`:
+
+- `community.vmware.vmware_vm_info`
+- `community.vmware.vmware_guest_info`
+- `community.vmware.vmware_guest_snapshot`
+- `ansible.builtin.include_tasks`
+- `ansible.builtin.set_fact`
+
+Si aún no tienes instaladas las colecciones necesarias:
+
+```bash
+ansible-galaxy collection install community.vmware
+```
+
+---
+## Derechos de autor
+
+Este rol es propiedad de **GBM**.
+Su uso, copia o distribución está sujeto a autorización previa por parte de la empresa.
