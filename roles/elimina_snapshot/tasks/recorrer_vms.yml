@@ -2,7 +2,7 @@
   community.vmware.vmware_guest_info:
     hostname: "{{ vm_host_dc }}"
     datacenter: "{{ vmware_data }}"
-    validate_certs: no
+    validate_certs: false
     name: "{{ vmhostmoment.guest_name }}"
   register: info_detalle_vm
   ignore_errors: true
