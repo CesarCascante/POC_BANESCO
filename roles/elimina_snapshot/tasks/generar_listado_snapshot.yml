@@ -24,7 +24,7 @@
 
 - name: Loop de Eliminar Snapshot en caso de existir | Agregar a la lista de snapshots a eliminar si cumple condición.
   set_fact:
-    elimina_snapshot_snapshots_a_eliminar: "{{ elimina_snapshot_snapshots_a_eliminar + [ { 'vm': info_detalle_vm.instance.hw_name, 'snapshot': item.name } ] }}"
+    elimina_snapshot_snapshots_a_eliminar: "{{ elimina_snapshot_snapshots_a_eliminar + [{ 'vm': info_detalle_vm.instance.hw_name, 'snapshot': item.name }] }}"
   when:
     - dias_diff | int > dias_eliminar | int
     # - item.description != "NO_BORRAR"
