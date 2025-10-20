@@ -1,0 +1,23 @@
+- name: Loop de crear listado por VM | Consultar el detalle del host.
+  community.vmware.vmware_guest_info:
+    hostname: "{{ vm_host_dc }}"
+    datacenter: "{{ vmware_data }}"
+    validate_certs: false
+    name: "{{ vmhostmoment.guest_name }}"
+  register: info_detalle_vm
+  ignore_errors: true
+
+- name: Loop de crear listado por VM | Configurar variable de ambiente infonamevmloop
+  set_fact:
+    infonamevmloop: "{{ info_detalle_vm }}"
+  when: info_detalle_vm.msg is not defined
+
+- name: Loop de crear listado por VM | Loop de Eliminar Snapshot en caso de existir.
+  vars:
+    datesnap: "{{ item }}"
+  ansible.builtin.include_tasks:
+    file: generar_listado_snapshot.yml
+  loop: '{{ info_detalle_vm.instance.snapshots }}'
+  loop_control:
+    extended: true
+  when: info_detalle_vm.msg is not defined and info_detalle_vm.instance.snapshots != []

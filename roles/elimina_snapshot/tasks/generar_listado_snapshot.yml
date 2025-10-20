@@ -1,0 +1,30 @@
+- name: Loop de Eliminar Snapshot en caso de existir | Configurar variable de ambiente fechasnap para validar dias.
+  set_fact:
+    fechasnap: "{{ item.creation_time }}"
+
+- name: Loop de Eliminar Snapshot en caso de existir | Obtener timestamp actual
+  set_fact:
+    ahora_ts: "{{ lookup('pipe', 'date +%s') | int }}"
+
+- name: Loop de Eliminar Snapshot en caso de existir | Obtener timestamp del snapshot
+  set_fact:
+    snap_ts: "{{ lookup('pipe', 'date -d \"' + fechasnap[:19].replace('T', ' ') + '\" +%s') | int }}"
+
+- name: Loop de Eliminar Snapshot en caso de existir | Comparar snapshot con más de 4 días
+  set_fact:
+    dias_diff: "{{ ((ahora_ts | int) - (snap_ts | int)) // 86400 | int }}"
+
+- name: Loop de Eliminar Snapshot en caso de existir | Mostrar resultado
+  debug:
+    msg: >-
+      ELIMINAR en servidor {{ info_detalle_vm.instance.hw_name }} con el snapshot {{ item.name }}
+  when:
+    - dias_diff | int > dias_eliminar | int
+    # - item.description != "NO_BORRAR"
+
+- name: Loop de Eliminar Snapshot en caso de existir | Agregar a la lista de snapshots a eliminar si cumple condición.
+  set_fact:
+    elimina_snapshot_snapshots_a_eliminar: "{{ elimina_snapshot_snapshots_a_eliminar + [{ 'vm': info_detalle_vm.instance.hw_name, 'snapshot': item.name }] }}"
+  when:
+    - dias_diff | int > dias_eliminar | int
+    # - item.description != "NO_BORRAR"

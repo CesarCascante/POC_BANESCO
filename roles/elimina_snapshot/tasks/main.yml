@@ -1,0 +1,22 @@
+- name: Obtener informacion de todas las VMs.
+  community.vmware.vmware_vm_info:
+    hostname: "{{ vm_host_dc }}"
+    validate_certs: false
+  register: vmware_vms
+
+- name: Loop de crear listado por VM.
+  vars:
+    vmhostmoment: "{{ item }}"
+  ansible.builtin.include_tasks:
+    file: recorrer_vms.yml
+  loop: "{{ vmware_vms.virtual_machines }}"
+
+- name: Loop de eliminar snapshots.
+  ansible.builtin.include_tasks:
+    file: eliminar_snapshot.yml
+  loop: "{{ elimina_snapshot_snapshots_a_eliminar }}"
+
+- name: Mensaje si no hay snapshots antiguos
+  debug:
+    msg: "No se encontraron snapshots con más de {{ dias_eliminar }} días de antigüedad"
+  when: elimina_snapshot_snapshots_a_eliminar | length == 0
